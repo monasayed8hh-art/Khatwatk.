@@ -1,0 +1,923 @@
+/* تعريف الألوان الأساسية للمنصة (نظام Dark Mode جذاب) - تصميم جديد باللون الأرجواني والوردي */
+
+:root {
+
+    --primary-color: #5500ff; /* أرجواني زاهي */
+
+    --accent-color: #ff006e;  /* وردي فاقع للتباين */
+
+    --bg-dark: #1c0029;       /* خلفية سوداء أرجوانية داكنة جداً */
+
+    --bg-light: #3d005e;      /* خلفية العناصر */
+
+    --text-light: #ffffff;    /* لون النص الأبيض */
+
+    --gold: #e99e00;          /* لون ذهبي/برتقالي للعناوين */
+
+    --danger: #eb4d4b;        /* لون أحمر للخروج والحذف */
+
+    --sidebar-width: 280px;   /* هذا المتغير لم يعد مستخدماً فعلياً */
+
+}
+
+/* إعدادات عامة */
+
+* { 
+
+    margin: 0; 
+
+    padding: 0; 
+
+    box-sizing: border-box; 
+
+    font-family: 'Tajawal', sans-serif; 
+
+}
+
+body {
+
+    background-color: var(--bg-dark); 
+
+    color: var(--text-light);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    overflow-x: hidden;
+
+    position: relative; 
+
+    z-index: 0;
+
+}
+
+/* --- تأثير النجوم المتلألئة --- */
+
+.stars {
+
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: -1;
+
+}
+
+.star {
+
+    position: absolute; background: #ffffff; border-radius: 50%; animation: twinkle linear infinite; opacity: 0;
+
+}
+
+@keyframes twinkle {
+
+    0% { opacity: 0; }
+
+    50% { opacity: 1; transform: scale(1.2); }
+
+    100% { opacity: 0; }
+
+}
+
+/* --- تصميم الهيدر المتحرك --- */
+
+.header-container { text-align: center; margin-top: 30px; position: relative; z-index: 10; }
+
+.main-title {
+
+    font-size: 4rem; font-weight: 800; color: transparent; 
+
+    -webkit-text-stroke: 2px var(--accent-color); 
+
+    text-shadow: 0 0 20px var(--primary-color); 
+
+    animation: titlePulse 3s infinite alternate;
+
+}
+
+@keyframes titlePulse {
+
+    0% { transform: scale(1); text-shadow: 0 0 20px var(--primary-color); }
+
+    100% { transform: scale(1.05); text-shadow: 0 0 40px var(--accent-color), 0 0 10px var(--gold); }
+
+}
+
+/* --- الحاوية الرئيسية --- */
+
+.app-container {
+
+    width: 90%; max-width: 1200px; margin: 40px auto; background: rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(15px); border-radius: 30px; padding: 30px; 
+
+    box-shadow: 0 15px 50px rgba(0,0,0,0.8), 0 0 20px var(--primary-color) inset; 
+
+    border: 1px solid rgba(255,255,255,0.1); min-height: 600px; z-index: 5; 
+
+}
+
+/* --- نظام التنقل بين الشاشات --- */
+
+.view-section { display: none; animation: slideIn 0.5s ease-out; }
+
+.view-section.active { display: block; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- صفحة تسجيل الدخول --- */
+
+#login-view { min-height: 500px; display: flex; justify-content: center; align-items: center;}
+
+.login-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 50px 0; }
+
+.login-input { 
+
+    width: 100%; max-width: 400px; padding: 20px; border-radius: 50px; 
+
+    border: 3px solid var(--primary-color); 
+
+    background: rgba(0,0,0,0.3); color: white; font-size: 1.5rem; text-align: center; margin-bottom: 25px; 
+
+    transition: 0.3s; outline: none; 
+
+}
+
+.btn-main { 
+
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color)); 
+
+    border: none; padding: 15px 60px; 
+
+    border-radius: 50px; color: white; font-size: 1.5rem; font-weight: bold; cursor: pointer; transition: 0.3s; 
+
+    box-shadow: 0 10px 30px rgba(85, 0, 255, 0.6); 
+
+}
+
+.contact-footer { 
+
+    margin-top: 50px; text-align: center; color: #bdc3c7; background: rgba(0,0,0,0.2); padding: 20px; 
+
+    border-radius: 20px; width: 100%; max-width: 500px; 
+
+    border: 1px solid rgba(255, 0, 110, 0.3);
+
+}
+
+.contact-footer a { 
+
+    color: var(--accent-color); 
+
+    text-decoration: none; 
+
+    font-weight: bold; 
+
+    transition: 0.2s;
+
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 5px 10px;
+
+    border: 1px solid var(--accent-color);
+
+    border-radius: 10px;
+
+}
+
+.contact-footer a:hover {
+
+    background: var(--accent-color);
+
+    color: var(--bg-dark);
+
+}
+
+/* =================================== */
+
+/* --- تنسيقات لوحة الطالب (التدفق الجديد) --- */
+
+/* =================================== */
+
+.dashboard-content-flow {
+
+    padding: 20px; 
+
+}
+
+/* تنسيقات المقتبس */
+
+.quote-box { background: linear-gradient(45deg, #a400a4, #7f00ff); color: white; padding: 15px; text-align: center; font-weight: bold; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+.grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+
+/* --- كروت المواد (Subjects) --- */
+
+.subject-card {
+
+    background: var(--bg-light); border-radius: 25px; padding: 20px; text-align: center; cursor: pointer; transition: 0.4s;
+
+    position: relative; overflow: hidden; border: 2px solid transparent; display: flex; flex-direction: column; align-items: center;
+
+    min-height: 250px; 
+
+}
+
+.subject-card:hover { transform: translateY(-10px); border-color: var(--accent-color); box-shadow: 0 0 30px rgba(255, 0, 110, 0.3); }
+
+.subject-card img {
+
+    width: 100%; max-width: 180px; height: 120px; object-fit: contain; margin-bottom: 15px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.5)); transition: 0.3s;
+
+    border-radius: 10px;
+
+}
+
+.subject-card h3 { font-size: 1.8rem; margin-bottom: 10px; color: var(--gold); }
+
+/* --- كروت المدرسين (Teachers) --- */
+
+.teacher-card {
+
+    background: linear-gradient(135deg, var(--bg-light), #2c0042);
+
+    color: var(--text-light);
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    font-size: 1.3rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    border-left: 5px solid var(--accent-color);
+
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+.teacher-card:hover {
+
+    transform: scale(1.05);
+
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-color);
+
+}
+
+.teacher-card i {
+
+    margin-left: 10px;
+
+    color: var(--gold);
+
+    font-size: 1.5rem;
+
+}
+
+/* --- أزرار عامة --- */
+
+.btn-back, .btn-logout { padding: 10px 20px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; transition: 0.2s; margin-bottom: 20px; }
+
+.btn-back { background: var(--accent-color); color: var(--bg-dark); }
+
+.btn-logout { background: var(--danger); color: white; }
+
+.btn-logout:hover { opacity: 0.8; }
+
+.btn-back i { margin-right: 10px; }
+
+/* === تنسيقات الشاشات الفرعية === */
+
+#teachers-view, #courses-view, #weeks-view {
+
+    padding: 20px;
+
+    min-height: 500px;
+
+}
+
+.courses-flex {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    margin-top: 30px;
+
+}
+
+.month-card {
+
+    width: 250px;
+
+    height: 150px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: white;
+
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 5px 10px rgba(255, 255, 255, 0.1) inset;
+
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+
+}
+
+.month-card:hover {
+
+    transform: translateY(-8px) scale(1.03);
+
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+
+}
+
+/* --- نظام الإشعارات والتنبيهات --- */
+
+.notification-bar {
+
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+
+    color: white;
+
+    padding: 15px 25px;
+
+    border-radius: 15px;
+
+    font-size: 1.2rem;
+
+    font-weight: 700;
+
+    margin-bottom: 30px;
+
+    text-align: right;
+
+    box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4);
+
+}
+
+/* --- شريط التقدم الأسطوري --- */
+
+.progress-container {
+
+    background: var(--bg-light);
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    margin-bottom: 30px;
+
+    border-left: 5px solid var(--gold);
+
+}
+
+.progress-title {
+
+    color: var(--text-light);
+
+    margin-bottom: 15px;
+
+    font-size: 1.4rem;
+
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+
+    padding-bottom: 10px;
+
+}
+
+.progress-bar-wrapper {
+
+    background: rgba(0, 0, 0, 0.3);
+
+    border-radius: 50px;
+
+    height: 30px;
+
+    overflow: hidden;
+
+    margin-bottom: 10px;
+
+}
+
+.progress-bar {
+
+    height: 100%;
+
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--gold));
+
+    transition: width 1.5s ease-out; /* حركة سلسة */
+
+    border-radius: 50px;
+
+    box-shadow: 0 0 10px var(--accent-color);
+
+}
+
+.progress-text {
+
+    text-align: center;
+
+    color: #ccc;
+
+    font-weight: 500;
+
+}
+
+.progress-text span {
+
+    font-size: 1.2rem;
+
+    font-weight: bold;
+
+    color: var(--gold);
+
+}
+
+/* --- معلومات الطالب الجديدة في الأسفل --- */
+
+.separation-bar {
+
+    text-align: center;
+
+    margin: 50px 0 30px;
+
+    color: var(--accent-color);
+
+    font-size: 1.8rem;
+
+    font-weight: 800;
+
+    padding-top: 30px;
+
+    border-top: 1px solid rgba(255,255,255,0.1);
+
+}
+
+.student-info-section {
+
+    background: var(--bg-light);
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    flex-wrap: wrap; /* للسماح بالعناصر بالنزول لسطر جديد في شاشات الهاتف */
+
+}
+
+.student-info {
+
+    flex-grow: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+.student-info p { 
+
+    margin: 0; 
+
+    font-size: 1.1rem; 
+
+    padding-right: 10px;
+
+    border-right: 3px solid var(--primary-color);
+
+}
+
+.student-info strong { color: var(--accent-color); }
+
+.student-info .code-value { font-family: monospace; font-size: 1.2rem; color: var(--gold); }
+
+.sidebar-buttons .btn-logout {
+
+    min-width: 150px;
+
+    padding: 15px;
+
+    font-size: 1.1rem;
+
+    margin-bottom: 0; /* لإلغاء المارجن القديم */
+
+}
+
+/* --- تنسيقات كروت الأسابيع (Weeks) --- */
+
+.week-card {
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    transition: 0.3s;
+
+    border: none;
+
+    cursor: pointer;
+
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+
+    color: white; 
+
+}
+
+.week-card:hover {
+
+    transform: translateY(-5px) scale(1.02);
+
+    box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+
+}
+
+.week-card i {
+
+    color: white; 
+
+}
+
+/* =================================== */
+
+/* --- تنسيقات لوحة المشرف --- */
+
+/* =================================== */
+
+.admin-panel {
+
+    padding: 30px;
+
+    background: var(--bg-light); 
+
+    border-radius: 20px;
+
+    margin-top: 20px;
+
+}
+
+.admin-form {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 20px;
+
+    margin: 30px 0;
+
+    align-items: center;
+
+}
+
+.admin-input, .admin-select {
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    border: 2px solid var(--primary-color);
+
+    background: rgba(0, 0, 0, 0.3);
+
+    color: white;
+
+    font-size: 1rem;
+
+    flex-grow: 1;
+
+    min-width: 200px;
+
+}
+
+.btn-admin {
+
+    padding: 15px 30px;
+
+    border-radius: 10px;
+
+    border: none;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    font-size: 1rem;
+
+}
+
+.btn-generate {
+
+    background: var(--gold);
+
+    color: var(--bg-dark);
+
+}
+
+.data-table {
+
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0 10px;
+
+    color: var(--text-light);
+
+    margin-top: 20px;
+
+}
+
+.data-table th, .data-table td {
+
+    padding: 15px;
+
+    text-align: right;
+
+    border: none;
+
+}
+
+.data-table th {
+
+    background: var(--primary-color);
+
+    font-size: 1.1rem;
+
+}
+
+.data-table tbody tr {
+
+    background: var(--bg-dark);
+
+    transition: 0.2s;
+
+}
+
+.data-table tbody tr:hover {
+
+    background: rgba(85, 0, 255, 0.4);
+
+}
+
+.data-table .code-cell {
+
+    font-family: monospace;
+
+    font-weight: bold;
+
+    color: var(--accent-color);
+
+}
+
+.expired {
+
+    color: var(--danger);
+
+    font-weight: bold;
+
+}
+
+/* =================================== */
+
+/* --- تنسيقات النافذة المنبثقة (MODAL) --- */
+
+/* =================================== */
+
+.modal-overlay {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.9); /* خلفية شبه شفافة */
+
+    display: none; /* مخفية افتراضياً */
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 1000;
+
+    animation: fadeIn 0.3s;
+
+}
+
+.modal-overlay.active {
+
+    display: flex;
+
+}
+
+.modal-content {
+
+    background: var(--bg-light);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    max-width: 90%;
+
+    width: 800px; /* حجم الشاشة الافتراضي للفيديو */
+
+    position: relative;
+
+    box-shadow: 0 0 50px rgba(85, 0, 255, 0.7);
+
+    animation: zoomIn 0.4s;
+
+}
+
+.close-btn {
+
+    position: absolute;
+
+    top: 15px;
+
+    left: 20px;
+
+    color: var(--danger);
+
+    font-size: 30px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+.close-btn:hover {
+
+    color: var(--accent-color);
+
+    transform: rotate(90deg);
+
+}
+
+.modal-title {
+
+    color: var(--gold);
+
+    text-align: center;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px dashed var(--primary-color);
+
+    padding-bottom: 10px;
+
+}
+
+.video-container {
+
+    position: relative;
+
+    width: 100%;
+
+    padding-bottom: 56.25%; /* نسبة 16:9 للفيديو */
+
+    height: 0;
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+
+}
+
+.video-container iframe {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+}
+
+@keyframes fadeIn {
+
+    from { opacity: 0; }
+
+    to { opacity: 1; }
+
+}
+
+@keyframes zoomIn {
+
+    from { transform: scale(0.8); }
+
+    to { transform: scale(1); }
+
+}
+
+/* =================================== */
+
+/* --- ميديا كويري للأجهزة الصغيرة --- */
+
+/* =================================== */
+
+@media (max-width: 900px) {
+
+    .app-container { width: 95%; padding: 15px; }
+
+    .main-title { font-size: 2.5rem; }
+
+    
+
+    .grid-container {
+
+        grid-template-columns: 1fr; 
+
+    }
+
+    .student-info-section {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 20px;
+
+    }
+
+    .sidebar-buttons .btn-logout {
+
+        width: 100%;
+
+    }
+
+    .admin-form { flex-direction: column; }
+
+    .admin-input, .admin-select, .btn-admin { width: 100%; min-width: auto; }
+
+}
+
+@media (max-width: 600px) {
+
+    .modal-content {
+
+        padding: 15px;
+
+    }
+
+}
