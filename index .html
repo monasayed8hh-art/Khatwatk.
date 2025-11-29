@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videos Navigator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #212529; color: #f8f9fa; }
+    .container { margin-top: 20px; max-width: 900px; }
+    .card {
+      background-color: #2c3034;
+      color: #f8f9fa;
+      border: 1px solid #495057;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+    .card:hover { transform: scale(1.02); background-color: #343a40; }
+    .back-btn {
+      margin-bottom: 20px;
+    }
+    video { border-radius: 10px; width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4 text-center text-primary">Videos</h1>
+    <button id="backBtn" class="btn btn-secondary back-btn d-none">⬅️ Back</button>
+    <div id="content"></div>
+  </div>
+
+  <script>
+  let jsonData;
+  const contentDiv = document.getElementById('content');
+  const backBtn = document.getElementById('backBtn');
+  const historyStack = [];
+
+  // تحميل البيانات
+  fetch('./coursatk_scraped_data.json')
+    .then(res => res.json())
+    .then(data => {
+      jsonData = data.data;
+      showYears();
+    })
+    .catch(err => {
+      contentDiv.innerHTML = `<div class="alert alert-danger">Error loading data: ${err.message}</div>`;
+    });
+
+  // وظيفة عامة للرجوع
+  backBtn.addEventListener('click', () => {
+    if (historyStack.length > 0) {
+      const prev = historyStack.pop();
+      prev();
+    }
+    if (historyStack.length === 0) backBtn.classList.add('d-none');
+  });
+
+  // عرض السنوات
+  function showYears() {
+    backBtn.classList.add('d-none');
+    contentDiv.innerHTML = '<h3 class="text-info mb-3">Select a Year</h3>';
+    jsonData.forEach(year => {
+      const card = document.createElement('div');
+      card.className = 'card p-3 mb-2';
+      card.textContent = year.year_name;
+      card.onclick = () => {
+        historyStack.push(showYears);
+        showSubjects(year);
+        backBtn.classList.remove('d-none');
+      };
+      contentDiv.appendChild(card);
+    });
+  }
+
+  // عرض المواد
+  function showSubjects(year) {
+    contentDiv.innerHTML = `<h3 class="text-info mb-3">Subjects in ${year.year_name}</h3>`;
+    if (!year.subjects?.length) {
+      contentDiv.innerHTML += '<p class="text-muted">No subjects found.</p>';
+      return;
+    }
+    year.subjects.forEach(subject => {
+      const card = document.createElement('div');
+      card.className = 'card p-3 mb-2';
+      card.textContent = subject.subject_name;
+      card.onclick = () => {
+        historyStack.push(() => showSubjects(year));
+        showTeachers(subject);
+      };
+      contentDiv.appendChild(card);
+    });
+  }
+
+  // عرض المدرسين
+  function showTeachers(subject) {
+    contentDiv.innerHTML = `<h3 class="text-warning mb-3">Teachers in ${subject.subject_name}</h3>`;
+    if (!subject.teachers?.length) {
+      contentDiv.innerHTML += '<p class="text-muted">No teachers found.</p>';
+      return;
+    }
+    subject.teachers.forEach(teacher => {
+      const card = document.createElement('div');
+      card.className = 'card p-3 mb-2';
+      card.textContent = teacher.teacher_name;
+      card.onclick = () => {
+        historyStack.push(() => showTeachers(subject));
+        showChapters(teacher);
+      };
+      contentDiv.appendChild(card);
+    });
+  }
+
+  // عرض الفصول
+  function showChapters(teacher) {
+    contentDiv.innerHTML = `<h3 class="text-success mb-3">Chapters by ${teacher.teacher_name}</h3>`;
+    if (!teacher.chapters?.length) {
+      contentDiv.innerHTML += '<p class="text-muted">No chapters found.</p>';
+      return;
+    }
+    teacher.chapters.forEach(chapter => {
+      const card = document.createElement('div');
+      card.className = 'card p-3 mb-2';
+      card.textContent = chapter.chapter_name;
+      card.onclick = () => {
+        historyStack.push(() => showChapters(teacher));
+        showLectures(chapter);
+      };
+      contentDiv.appendChild(card);
+    });
+  }
+
+  // عرض المحاضرات
+  function showLectures(chapter) {
+    contentDiv.innerHTML = `<h3 class="text-primary mb-3">Lectures in ${chapter.chapter_name}</h3>`;
+    if (!chapter.lectures?.length) {
+      contentDiv.innerHTML += '<p class="text-muted">No lectures found.</p>';
+      return;
+    }
+    chapter.lectures.forEach(lecture => {
+      const card = document.createElement('div');
+      card.className = 'card p-3 mb-2';
+      card.textContent = lecture.lecture_name;
+      card.onclick = () => {
+        historyStack.push(() => showLectures(chapter));
+        showVideos(lecture);
+      };
+      contentDiv.appendChild(card);
+    });
+  }
+
+  // عرض الفيديوهات
+  function showVideos(lecture) {
+    contentDiv.innerHTML = `<h3 class="text-light mb-3">Videos for ${lecture.lecture_name}</h3>`;
+    if (!lecture.videos?.length) {
+      contentDiv.innerHTML += '<p class="text-muted">No videos found.</p>';
+      return;
+    }
+    lecture.videos.forEach(video => {
+      const div = document.createElement('div');
+      div.className = 'mb-4 p-3 border rounded bg-dark';
+      div.innerHTML = `<h5>${video.video_name}</h5>`;
+
+      if (video.links?.length) {
+        video.links.forEach(link => {
+          const label = link.label || link.quality;
+          const url = link.url || link.link;
+          if (url.endsWith('.mp4') || url.endsWith('.webm') || url.endsWith('.ogg')) {
+            div.innerHTML += `
+              <div class="ratio ratio-16x9 mt-2">
+                <video controls>
+                  <source src="${url}" type="video/mp4">
+                  متصفحك لا يدعم تشغيل الفيديو.
+                </video>
+              </div>
+              <p class="mt-2 text-muted">Quality: ${label}</p>
+            `;
+          } else {
+            div.innerHTML += `
+              <p><a href="${url}" target="_blank" class="link-light">🔗 ${label}</a></p>
+            `;
+          }
+        });
+      } else {
+        div.innerHTML += '<p class="text-muted">No links available.</p>';
+      }
+
+      contentDiv.appendChild(div);
+    });
+  }
+  </script>
+</body>
+</html>
