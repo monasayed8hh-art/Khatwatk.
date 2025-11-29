@@ -1,275 +1,69 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
-
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة خطوتك التعليمية المتكاملة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>منصة خطوتك التعليمية المتكاملة</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    
-
-    <link rel="stylesheet" href="style.css">
+<style>
+:root {
+    --primary-color: #4a00d6;
+    --accent-color: #ff4db0;
+    --gold: #f3c623;
+    --text-light: #f8f9fa;
+}
+body { font-family:'Tajawal',sans-serif; margin:0; padding:0; background:#121212; color:var(--text-light); }
+.btn-back i { transform: rotate(180deg); } /* تصحيح اتجاه السهم للعودة */
+</style>
 
 </head>
-
 <body onload="initApp()"> 
 
-    
-
-    <div class="stars" id="star-container"></div>
-
-    <header class="header-container">
-
-        <h1 class="main-title">✨ خطوتك ✨</h1>
-
-        <p class="sub-title" id="sub-title">منصتك التعليمية المتكاملة</p>
-
-    </header>
-
-    <main class="app-container">
-
-        
-
-        <section id="login-view" class="view-section active">
-
-            <div class="login-wrapper">
-
-                <h2 style="margin-bottom: 20px; color: var(--accent-color);">بوابة الدخول الموحدة</h2>
-
-                <input type="text" id="access-code-input" class="login-input" placeholder="ادخل الكود هنا 🔑">
-
-                <button class="btn-main" onclick="attemptLogin()">دخول للمنصة 🚀</button>
-
-                <div class="contact-footer">
-
-                    <p style="font-weight: bold; color: white; margin-bottom: 10px;">للحصول على كود الاشتراك (خطوتك):</p>
-
-                    <a href="https://chat.whatsapp.com/HBZCFogEwom2l7kVErZvJE?mode=wwt" target="_blank">
-
-                        📱 اضغط هنا للانضمام لجروب الواتساب
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <section id="admin-panel-view" class="view-section">
-
-            <div class="admin-panel">
-
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-
-                    <h2>👮‍♂️ لوحة تحكم المشرف - خطوتك</h2>
-
-                    <button class="btn-logout" onclick="logoutUser()">خروج من النظام</button>
-
-                </div>
-
-                
-
-                <div class="admin-form">
-
-                    <input type="text" id="new-student-name" class="admin-input" placeholder="اسم الطالب الثلاثي">
-
-                    <select id="new-student-stream" class="admin-select">
-
-                        <option value="science">علمي علوم (بدون رياضة)</option>
-
-                        <option value="math">علمي رياضة (بدون أحياء)</option>
-
-                    </select>
-
-                    <select id="new-code-duration" class="admin-select">
-
-                        <option value="1">ساعة واحدة (تجريبي)</option>
-
-                        <option value="720">30 يوم (شهر كامل)</option>
-
-                    </select>
-
-                    <button class="btn-admin btn-generate" onclick="generateNewCode()">✨ توليد كود جديد</button>
-
-                </div>
-
-                
-
-                <h3 style="border-bottom: 2px solid var(--primary-color); padding-bottom: 10px;">سجل الأكواد النشطة</h3>
-
-                <div style="overflow-x: auto;">
-
-                    <table class="data-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>اسم الطالب</th>
-
-                                <th>الكود (أرقام فقط)</th>
-
-                                <th>التخصص</th>
-
-                                <th>تاريخ الانتهاء</th>
-
-                                <th>الحالة</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody id="codes-table-body"></tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <section id="student-dashboard-view" class="view-section">
-
-            <div class="dashboard-content-flow">
-
-                
-
-                <div class="notification-bar" id="dynamic-greeting"></div>
-
-                
-
-                <div class="quote-box">💡 "النجاح هو مجموع مجهودات صغيرة تتكرر يوماً بعد يوم.. أنت في خطوتك الصحيحة!"</div>
-
-                
-
-                <h2 style="text-align: center; margin-bottom: 30px; color: var(--gold);">📚 موادك الدراسية</h2>
-
-                
-
-                <div class="grid-container" id="subjects-grid">
-
-                    </div>
-
-                <div class="separation-bar">ملفك وتقدمك</div>
-
-                <div class="progress-container">
-
-                    <h3 class="progress-title">🎯 إجمالي تقدمك الأكاديمي (تجريبي)</h3>
-
-                    <div class="progress-bar-wrapper">
-
-                        <div class="progress-bar" id="academic-progress-bar" style="width: 0%;"></div>
-
-                    </div>
-
-                    <p class="progress-text"><span id="progress-percentage">0%</span> من المواد المتاحة تم استكشافها!</p>
-
-                </div>
-
-                <div class="student-info-section">
-
-                    <div class="student-info">
-
-                        <p>👋 أهلاً بك يا <strong><span id="student-name-display"></span></strong></p>
-
-                        <p>تخصصك: <strong><span id="student-stream-display"></span></strong></p>
-
-                        <p>الكود: <span class="code-value" id="student-code-display"></span></p>
-
-                        <p>ينتهي في: <strong><span id="expiry-date-display"></span></strong></p>
-
-                    </div>
-
-                    <div class="sidebar-buttons">
-
-                        <button class="btn-logout" onclick="logoutUser()">تسجيل خروج 🚪</button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <section id="teachers-view" class="view-section">
-
-            <button class="btn-back" onclick="showView('student-dashboard-view')"><i class="fas fa-arrow-right"></i> العودة للمواد</button>
-
-            <h2 id="selected-subject-header" style="text-align: center; margin: 20px 0; color: var(--accent-color); font-size: 2.5rem;"></h2>
-
-            <p style="text-align: center; margin-bottom: 30px;">نخبة من أفضل المدرسين على منصة خطوتك</p>
-
-            <div class="grid-container" id="teachers-grid">
-
-                 </div>
-
-        </section>
-
-        <section id="courses-view" class="view-section">
-
-            <button class="btn-back" onclick="showView('teachers-view')"><i class="fas fa-arrow-right"></i> العودة للمدرسين</button>
-
-            <h2 id="selected-teacher-header" style="text-align: center; margin: 30px 0; color: var(--gold);"></h2>
-
-            <div class="courses-flex">
-
-                </div>
-
-        </section>
-
-        <section id="weeks-view" class="view-section">
-
-            <button class="btn-back" onclick="showView('courses-view')"><i class="fas fa-arrow-right"></i> العودة للشهور</button>
-
-            <h2 id="selected-week-header" style="text-align: center; margin: 30px 0; color: var(--accent-color); font-size: 2.5rem;"></h2>
-
-            <p style="text-align: center; margin-bottom: 30px; color: var(--text-light);">اضغط على الأسبوع لمشاهدة محتوى الفيديو الخاص به.</p>
-
-            <div class="grid-container" id="weeks-grid">
-
-                </div>
-
-        </section>
-
-    </main>
-
-    <div id="video-modal" class="modal-overlay" onclick="closeVideoModal()">
-
-        <div class="modal-content" onclick="event.stopPropagation()">
-
-            <span class="close-btn" onclick="closeVideoModal()">&times;</span>
-
-            <h3 id="modal-video-title" class="modal-title">عنوان الفيديو</h3>
-
-            <div class="video-container">
-
-                <iframe id="video-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-            </div>
-
-            <div class="modal-info">
-
-                <p>💡 ملاحظة: يتم تشغيل الفيديو مباشرة داخل المنصة (Embed).</p>
-
-            </div>
-
+<div class="stars" id="star-container"></div>
+
+<header class="header-container">
+    <h1 class="main-title">✨ خطوتك ✨</h1>
+    <p class="sub-title" id="sub-title">منصتك التعليمية المتكاملة</p>
+</header>
+
+<main class="app-container">
+
+<!-- بوابة الدخول -->
+<section id="login-view" class="view-section active">
+    <div class="login-wrapper">
+        <h2 style="margin-bottom:20px; color: var(--accent-color);">بوابة الدخول الموحدة</h2>
+        <input type="text" id="access-code-input" class="login-input" placeholder="ادخل الكود هنا 🔑">
+        <button class="btn-main" onclick="attemptLogin()">دخول للمنصة 🚀</button>
+        <div class="contact-footer">
+            <p style="font-weight:bold; color:white; margin-bottom:10px;">للحصول على كود الاشتراك (خطوتك):</p>
+            <a href="https://chat.whatsapp.com/HBZCFogEwom2l7kVErZvJE?mode=wwt" target="_blank">📱 اضغط هنا للانضمام لجروب الواتساب</a>
         </div>
-
     </div>
+</section>
 
-    <script src="script.js"></script>
+<!-- باقي الأقسام ... كما في كودك -->
+<!-- تأكد من وجود جميع الدوال في script.js مثل initApp, attemptLogin, logoutUser, showView ... إلخ -->
 
+</main>
+
+<!-- مودال الفيديو -->
+<div id="video-modal" class="modal-overlay" onclick="closeVideoModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closeVideoModal()">&times;</span>
+        <h3 id="modal-video-title" class="modal-title">عنوان الفيديو</h3>
+        <div class="video-container">
+            <iframe id="video-iframe" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="modal-info">
+            <p>💡 ملاحظة: يتم تشغيل الفيديو مباشرة داخل المنصة (Embed).</p>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
 </body>
-
 </html>
