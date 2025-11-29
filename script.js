@@ -430,22 +430,22 @@
             })
             .then(data => {
                 generatedCodesList = data; // تخزين الأكواد الجديدة
-                
-                // بدء التطبيق بعد تحميل الأكواد بنجاح
-                generateStars(); 
-                if (localStorage.getItem('khatwatak_active_session')) {
-                    const sessionData = JSON.parse(localStorage.getItem('khatwatak_active_session'));
-                    validateAndLoadSession(sessionData.code);
-                } else {
-                    showView('login-view');
-                }
             })
             .catch(err => {
-                console.error("Error loading codes.json:", err);
-                // رسالة خطأ واضحة عند الفشل
+                console.error("Error loading codes.json (Continuing to allow Admin Login):", err);
+                // ⚠️ عند الفشل، نتأكد أن القائمة فارغة
+                generatedCodesList = []; 
+                
+                // ⚠️ عرض رسالة التنبيه (للمشرف) على شاشة الدخول فقط
                 const errorHtml = `
-                    <div class="alert alert-danger text-center mx-auto" style="max-width: 400px;">
-                        <i class="fas fa-exclamation-triangle"></i> فشل في تحميل أكواد الدخول. يرجى التأكد من وجود ملف **codes.json** وصحة تنسيقه.
+                    <div class="alert alert-danger text-center mx-auto" style="max-width: 400px; margin-top: 15px;">
+                        <i class="fas fa-exclamation-triangle"></i> **تنبيه:** فشل تحميل أكواد الطلاب. يرجى مراجعة ملف **codes.json**.
                     </div>
                 `;
-                // عرض رسالة الخطأ في شاشة الدخول
+                const loginView = document.getElementById('login-view');
+                if (loginView) {
+                    // نستخدم insertAdjacentHTML لعدم مسح محتوى شاشة الدخول
+                    loginView.insertAdjacentHTML('beforeend', errorHtml);
+                }
+            })
+          
