@@ -1,0 +1,29 @@
+// utils/firebaseConfig.js
+
+import { initializeApp } from "firebase/app";
+import { getAuth, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+// **!! يجب تعديل هذه البيانات ببيانات مشروعك الخاصة من وحدة تحكم Firebase !!**
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY_HERE",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "...",
+    appId: "..."
+};
+
+// تهيئة تطبيق Firebase
+const app = initializeApp(firebaseConfig);
+
+// تهيئة المصادقة (Authentication)
+export const auth = getAuth(app);
+
+// تهيئة قاعدة البيانات (Firestore)
+export const db = getFirestore(app);
+
+// **مهمة حفظ تسجيل الدخول بالجهاز (Keep Me Logged In):**
+// عند استخدام "تسجيل الدخول بالكود"، يجب تطبيق هذه الخاصية قبل عملية تسجيل الدخول
+// لكننا نصدرها هنا لاستخدامها في ملف تسجيل الدخول (الخطوة 3).
+export { setPersistence, browserLocalPersistence };
