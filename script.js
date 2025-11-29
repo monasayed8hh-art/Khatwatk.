@@ -4,8 +4,8 @@
 
 const SUPER_ADMIN_CODE = "111111"; // كود المشرف الافتراضي
 
-// ⚠️ قائمة الأكواد الثابتة (Hardcoded) لتمكين الطلاب من الدخول على الموقع المنشور
-// هذا هو التعديل الأساسي لحل مشكلة عدم عمل الأكواد للآخرين.
+// ⚠️ قائمة الأكواد الثابتة (Hardcoded) لتمكين الطلاب من الدخول على الموقع المنشور عالمياً.
+// لتعديل هذه القائمة أو إضافة طالب جديد، يجب عليك تعديل هذا الملف على GitHub وإعادة النشر.
 let generatedCodesList = [
     {
         name: "الطالب التجريبي 1 (علمي علوم)",
@@ -13,7 +13,7 @@ let generatedCodesList = [
         stream: "science",
         start: null,
         // تم تعيين تاريخ انتهاء بعيد لضمان العمل لفترة طويلة
-        expiryTimestamp: 1800000000000 // تاريخ الانتهاء (2027) 
+        expiryTimestamp: 1800000000000 // تاريخ الانتهاء (في المستقبل)
     },
     {
         name: "الطالب التجريبي 2 (علمي رياضة)",
@@ -22,11 +22,11 @@ let generatedCodesList = [
         start: null,
         expiryTimestamp: 1800000000000 
     }
-    // يمكن إضافة المزيد من الطلاب هنا يدوياً
+    // **هنا يجب إضافة أي أكواد جديدة يتم توليدها يدوياً بعد نسخها من التنبيه**
 ]; 
 
-const subjectsDB = {
-    // استخدم أسماء ملفات الصور التي حملتها (يجب أن تكون في نفس المجلد)
+const subjectsDB = { 
+    // ... بيانات المواد ...
     arabic: { 
         name: "لغة عربية", 
         icon: "fas fa-language", 
@@ -66,7 +66,7 @@ const subjectsDB = {
 };
 
 const teacherCoursesDB = {
-    // 💡 مهم: جميع الروابط يجب أن تكون بصيغة "embed" لتشغيل الفيديو داخل المنصة (ضمن الـ Modal).
+    // ... بيانات المدرسين ...
     "محمد صلاح": { 
         "نوفمبر 2025": {
             "الأسبوع الأول (النحو)": "https://www.youtube.com/embed/dQw4w9WgXcQ", 
@@ -99,7 +99,6 @@ const teacherCoursesDB = {
     },
 };
 
-// تم إزالة قراءة 'khatwatak_codes_db' من localStorage
 let currentUserSession = JSON.parse(localStorage.getItem('khatwatak_active_session'));
 let studentProgress = JSON.parse(localStorage.getItem('khatwatak_student_progress')) || {}; 
 
@@ -158,11 +157,10 @@ window.attemptLogin = function() {
     
     if (codeInput === SUPER_ADMIN_CODE) {
         showView('admin-panel-view');
-        // تم إزالة استدعاء initAdminPage لعدم استخدامها
+        initAdminPage();
         return;
     }
     
-    // عملية البحث عن الكود ستتم الآن في القائمة الثابتة
     const studentData = generatedCodesList.find(user => user.code === codeInput);
     if (studentData) {
         const now = new Date().getTime();
@@ -171,7 +169,6 @@ window.attemptLogin = function() {
         } else {
             if (!studentData.start) {
                 studentData.start = now;
-                // ⚠️ لم يعد هناك حفظ في الـ localStorage لقائمة الأكواد العامة
             }
             localStorage.setItem('khatwatak_active_session', JSON.stringify(studentData));
             currentUserSession = studentData;
@@ -188,7 +185,7 @@ function validateAndLoadSession(code) {
     if (!code) return;
     if (code === SUPER_ADMIN_CODE) {
         showView('admin-panel-view');
-        // تم إزالة استدعاء initAdminPage لعدم استخدامها
+        initAdminPage();
         return;
     }
     
@@ -386,10 +383,80 @@ window.closeVideoModal = function() {
 // 6. 📝 منطق لوحة المشرف (ADMIN PANEL LOGIC)
 // ==========================================================
 
-// 🛑 تم إزالة وظيفة generateNewCode بالكامل لأنها لا تعمل بدون قاعدة بيانات.
-// 🛑 تم إزالة وظيفة renderAdminTable بالكامل لعدم الحاجة إليها.
-// 🛑 تم إزالة وظيفة initAdminPage بالكامل لعدم الحاجة إليها.
+window.generateNewCode = function() {
+    const name = document.getElementById('new-student-name').value;
+    const stream = document.getElementById('new-student-stream').value;
+    const hours = parseInt(document.getElementById('new-code-duration').value);
+    if (!name) { alert("⚠️ يجب كتابة اسم الطالب أولاً"); return; }
 
+    const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const now = new Date().getTime();
+    const expiryTimestamp = now + (hours * 60 * 60 * 1000);
+    const newStudentEntry = {
+        name: name,
+        code: randomCode,
+        stream: stream,
+        start: null, 
+        expiryTimestamp: expiryTimestamp
+    };
+
+    // 1. تحديث قائمة الأكواد محلياً في ذاكرة المتصفح فقط
+    generatedCodesList.push(newStudentEntry); 
+    
+    // 2. تحديث جدول المشرف ليرى الكود الجديد
+    renderAdminTable(); 
+    document.getElementById('new-student-name').value = '';
+    
+    // 3. عرض تنبيه هام للمشرف لنسخ الكود ولصقه يدوياً في GitHub
+    const codeDataToCopy = `{
+    name: "${name}",
+    code: "${randomCode}",
+    stream: "${stream}",
+    start: null,
+    expiryTimestamp: ${expiryTimestamp}
+},`;
+
+    alert(`✅ تم توليد الكود بنجاح للطالب: ${name}\n🔑 الكود هو: ${randomCode}\n\n🛑 هام جداً:\nلجعل هذا الكود يعمل للطلاب، يجب عليك الآن:\n1. نسخ البيانات أدناه بالكامل (بما في ذلك القوس \`{\`).\n2. الذهاب إلى ملف \`script.js\` على GitHub.\n3. لصق الكود في قائمة \`generatedCodesList\` يدوياً.\n\n--- انسخ هذا --- \n${codeDataToCopy}\n-------------------`);
+}
+
+function renderAdminTable() {
+    const tbody = document.getElementById('codes-table-body');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    
+    const now = new Date().getTime();
+    generatedCodesList.forEach(student => {
+        const tr = document.createElement('tr');
+        const streamName = student.stream === 'science' ? 'علمي علوم' : 'علمي رياضة';
+        const expiryDate = new Date(student.expiryTimestamp).toLocaleString('ar-EG');
+        const isExpired = now > student.expiryTimestamp;
+        
+        // للتمييز بين الأكواد الثابتة والمولدة حديثاً في نفس الجلسة
+        const isLocallyGenerated = !student.code.startsWith('987654') && !student.code.startsWith('456789') && !student.start; 
+        
+        let status;
+        if (isExpired) {
+            status = '<span class="expired">منتهي</span>';
+        } else if (isLocallyGenerated) {
+             status = '<span style="color:orange;">قيد النشر (انسخ الكود)</span>';
+        } else {
+            status = '<span style="color:green;">نشط</span>';
+        }
+
+        tr.innerHTML = `
+            <td>${student.name}</td>
+            <td class="code-cell">${student.code}</td>
+            <td>${streamName}</td>
+            <td>${expiryDate}</td>
+            <td>${status}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function initAdminPage() {
+    renderAdminTable();
+}
 
 // ==========================================================
 // 7. 🚀 التهيئة والتشغيل (INITIALIZATION)
@@ -403,5 +470,5 @@ window.initApp = function() {
     } else {
         showView('login-view');
     }
-            }
-            
+}
+    
