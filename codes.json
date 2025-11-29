@@ -1,38 +1,17 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة خطوتك</title>
-<style>
-body { font-family: Cairo; background:#f2f5ff; text-align:center; padding:40px; }
-h1 { color:#2a3daa; animation: glow 2s infinite alternate; }
-@keyframes glow { from { text-shadow:0 0 5px #8aa0ff;} to { text-shadow:0 0 20px #2a3daa;}}
-.box { background:white; width:90%; max-width:400px; margin:auto; padding:20px; border-radius:15px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
-input { width:90%; padding:12px; margin-top:15px; border-radius:10px; border:1px solid #aaa; font-size:18px; }
-button { width:95%; padding:12px; background:#2a3daa; border:none; border-radius:10px; color:white; font-size:20px; margin-top:15px; cursor:pointer;}
-button:hover { background:#1c2f7a;}
-.contact { margin-top:20px; font-size:16px;}
-</style>
-</head>
-<body>
-<h1>منصة خطوتك</h1>
-<div class="box">
-<h2>ادخل الكود</h2>
-<input type="text" id="codeInput" placeholder="ادخل الكود هنا">
-<button onclick="login()">دخول</button>
-</div>
-<p class="contact">للتواصل: 01128381838<br><a href="https://chat.whatsapp.com/HBZCFogEwom2l7kVErZvJE">جروب الواتس</a></p>
-<script>
-const supervisorCode = "01128381838000";
-if(localStorage.getItem("role")==="supervisor"){window.location.href="dashboard_supervisor.html";}
-if(localStorage.getItem("role")==="student"){window.location.href="student_home.html";}
-function login(){
-  const code=document.getElementById("codeInput").value.trim();
-  if(code===supervisorCode){localStorage.setItem("role","supervisor");window.location.href="dashboard_supervisor.html";}
-  else if(/^[0-9]{6,10}$/.test(code)){localStorage.setItem("role","student");localStorage.setItem("student_code",code);window.location.href="student_home.html";}
-  else{alert("الكود غير صحيح");}
-}
-</script>
-</body>
-</html>
+[
+    {
+        "name": "الطالب التجريبي 1 (علمي علوم)",
+        "code": "987654",
+        "stream": "science",
+        "start": null,
+        "expiryTimestamp": 1800000000000
+    },
+    {
+        "name": "الطالب التجريبي 2 (علمي رياضة)",
+        "code": "456789",
+        "stream": "math",
+        "start": null,
+        "expiryTimestamp": 1800000000000 
+    }
+    // إذا أضفت أكواد جديدة، تأكد من وجود فاصلة (,) بعد كل كود باستثناء الكود الأخير
+]
