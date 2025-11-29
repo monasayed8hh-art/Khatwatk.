@@ -5,13 +5,19 @@
         "stream": "science",
         "start": null,
         "expiryTimestamp": 1800000000000
+    }, 
+    {
+        "name": "عبدالعزيز خالد",
+        "code": "335577",
+        "stream": "science",
+        "start": null,
+        "expiryTimestamp": 1800000000000
     },
     {
-        "name": "الطالب التجريبي 2 (علمي رياضة)",
-        "code": "456789",
+        "name": "احمد محمد",
+        "code": "889911",
         "stream": "math",
         "start": null,
-        "expiryTimestamp": 1800000000000 
+        "expiryTimestamp": 1800000000000
     }
-    // إذا أضفت أكواد جديدة، تأكد من وجود فاصلة (,) بعد كل كود باستثناء الكود الأخير
 ]
