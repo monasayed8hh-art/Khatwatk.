@@ -2,7 +2,7 @@
     // 1. 🗄️ بيانات التطبيق (DATA - مكان المواد والمدرسين)
     // ==========================================================
     
-    // 🔑 تم تغيير كود المشرف لـ 0112838183800
+    // 🔑 هذا هو كود المشرف الذي طلبته
     const SUPER_ADMIN_CODE = "0112838183800"; 
     // generatedCodesList أصبحت فارغة وسيتم ملؤها من ملف codes.json
     let generatedCodesList = []; 
@@ -448,7 +448,4 @@
                         <i class="fas fa-exclamation-triangle"></i> فشل في تحميل أكواد الدخول. يرجى التأكد من وجود ملف **codes.json** وصحة تنسيقه.
                     </div>
                 `;
-                document.getElementById('login-view').innerHTML = errorHtml;
-                showView('login-view');
-            });
-    }
+                // عرض رسالة الخطأ في شاشة الدخول
