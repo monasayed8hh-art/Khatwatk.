@@ -77,7 +77,6 @@ body {
     50% { opacity: 1; transform: scale(1.2); }
 
     100% { opacity: 0; }
-
 }
 
 /* --- تصميم الهيدر المتحرك --- */
@@ -101,7 +100,6 @@ body {
     0% { transform: scale(1); text-shadow: 0 0 20px var(--primary-color); }
 
     100% { transform: scale(1.05); text-shadow: 0 0 40px var(--accent-color), 0 0 10px var(--gold); }
-
 }
 
 /* --- الحاوية الرئيسية --- */
@@ -120,9 +118,18 @@ body {
 
 /* --- نظام التنقل بين الشاشات --- */
 
-.view-section { display: none; animation: slideIn 0.5s ease-out; }
+/* 🚀 هذا هو التعديل الأساسي لضمان ظهور شاشة واحدة فقط */
+.view-section { 
+    display: none; 
+    width: 100%; /* تأكد من عرض كامل */
+    min-height: 100vh; /* تأكد من تغطية الشاشة */
+    animation: slideIn 0.5s ease-out; 
+}
 
-.view-section.active { display: block; }
+.view-section.active { 
+    display: block; 
+}
+/* ---------------------------------------------------- */
 
 @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -919,5 +926,4 @@ body {
         padding: 15px;
 
     }
-
-}
+    }
