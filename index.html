@@ -21,9 +21,7 @@
 </head>
 
 <body onload="initApp()"> 
-
     
-
     <div class="stars" id="star-container"></div>
 
     <header class="header-container">
@@ -82,7 +80,7 @@
 
                     <input type="text" id="new-student-name" class="admin-input" placeholder="اسم الطالب الثلاثي">
 
-                    <select id="new-student-stream" class="admin-select">
+                    <select type="text" id="new-student-stream" class="admin-select">
 
                         <option value="science">علمي علوم (بدون رياضة)</option>
 
@@ -268,8 +266,11 @@
 
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <script src="script.js"></script>
 
 </body>
 
-</html>
+    </html>
+    
