@@ -1,18 +1,11 @@
 [
     {
-        "name": "الطالب التجريبي 1 (علمي علوم)",
-        "code": "987654",
-        "stream": "science",
-        "start": null,
-        "expiryTimestamp": 1800000000000
-    }, 
-    {
         "name": "عبدالعزيز خالد",
         "code": "335577",
         "stream": "science",
         "start": null,
         "expiryTimestamp": 1800000000000
-    },
+    }, 
     {
         "name": "احمد محمد",
         "code": "889911",
@@ -20,4 +13,5 @@
         "start": null,
         "expiryTimestamp": 1800000000000
     }
+    // ⚠️ لا يوجد فاصلة (,) بعد الكود الأخير
 ]
